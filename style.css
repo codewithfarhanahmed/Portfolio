@@ -57,21 +57,31 @@ nav ul li a:hover {
 /* Hero */
 .hero {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 40px 20px;
+  padding: 15px 20px;
   background: linear-gradient(135deg, #4400aa, #bd30ff);
   color: #fff;
-  min-height: 50vh;
+  min-height: 25vh;
   position: relative;
   overflow: hidden;
 }
 
+/* Fade effect at bottom of hero */
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px; /* controls fade height */
+  background: linear-gradient(to bottom, rgba(189, 48, 255, 0) 0%, #f5f6fa 100%);
+  pointer-events: none;
+}
+
 .hero-text {
   flex: 1;
-  min-width: 280px;
-  margin-right: 20px;
+  position: relative;
   z-index: 1;
 }
 
@@ -101,7 +111,6 @@ nav ul li a:hover {
   border-radius: 6px;
   text-decoration: none;
   transition: 0.3s;
-  display: inline-block;
 }
 
 .btn:hover {
@@ -113,56 +122,65 @@ nav ul li a:hover {
 /* Hero Image */
 .hero-img {
   flex: 1;
-  min-width: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
+/* Circular white frame */
 .hero-img img {
-  width: 220px;
-  height: 220px;
+  width: 200px;        /* adjust size */
+  height: 200px;       /* make it square */
+  object-fit: cover;   /* crop nicely */
+  border-radius: 50%;  /* circular crop */
+  border: 4px solid #fff;  /* optional white border */
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.2); /* optional shadow */
+}
+
+/* Profile image with fade top & bottom */
+.hero-img .profile-pic img {
+  width: 300%;
+  height: 300%;
   object-fit: cover;
-  border-radius: 50%;
-  border: 4px solid #fff;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+
+  /* Fade top & bottom inside circle */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: cover;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-repeat: no-repeat;
+  mask-size: cover;
 }
 
-/* Sections */
-section {
-  padding: 60px 30px;
-}
-
+/* About, Projects, Gallery, Contact */
 .about, .projects, .gallery, .contact {
-  max-width: 1200px;
-  margin: auto;
+  padding: 60px 50px;
   text-align: center;
 }
 
 .about h2, .projects h2, .gallery h2, .contact h2 {
   font-size: 28px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: #4400aa;
 }
 
-/* Card Layouts */
-.project-container, .gallery-grid {
+/* Projects */
+.project-container {
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
-/* Project Cards */
 .project-card {
   background: #fff;
   padding: 20px;
   border-radius: 12px;
-  width: 300px;
-  max-width: 90%;
+  width: 280px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  text-align: left;
+  transition: transform 0.3s;
 }
 
 .project-card:hover {
@@ -173,15 +191,19 @@ section {
 .project-card img {
   width: 100%;
   border-radius: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 /* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
 .gallery-grid img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 12px;
+  border-radius: 10px;
   transition: 0.3s;
 }
 
@@ -208,25 +230,4 @@ footer {
   text-align: center;
   padding: 15px;
   margin-top: 30px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero-text {
-    margin-right: 0;
-    margin-bottom: 20px;
-  }
-
-  .project-card {
-    width: 100%;
-  }
-
-  .gallery-grid img {
-    height: auto;
-  }
 }

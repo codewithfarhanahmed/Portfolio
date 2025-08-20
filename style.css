@@ -130,10 +130,10 @@ nav ul li a:hover {
 
 /* Circular white frame */
 .hero-img img {
-  width: 80px;        /* adjust size */
-  height: 80px;       /* make it square */
+  width: 8px;        /* adjust size */
+  height: 8px;       /* make it square */
   object-fit: cover;   /* crop nicely */
-  border-radius: 50%;  /* circular crop */
+  border-radius: 5%;  /* circular crop */
   border: 30px solid #fff;  /* optional white border */
   box-shadow: 0px 4px 10px rgba(0,0,0,0.2); /* optional shadow */
 }

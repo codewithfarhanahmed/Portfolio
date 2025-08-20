@@ -20,6 +20,35 @@
       </ul>
     </nav>
   </header>
+  <!-- Modern Cursor Follower -->
+  <div class="cursor-follower"></div>
+
+  <style>
+    .cursor-follower {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 35px;
+      height: 35px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      transition: transform 0.12s ease-out;
+      z-index: 9999;
+    }
+  </style>
+
+  <script>
+    const follower = document.querySelector(".cursor-follower");
+
+    document.addEventListener("mousemove", (e) => {
+      follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    });
+  </script>
 
   <!-- Hero Section -->
   <section class="hero">

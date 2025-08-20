@@ -16,7 +16,7 @@ body {
 
 /* Navbar */
 header {
-  background: #111;
+  background: linear-gradient(90deg, #4400aa, #bd30ff);
   padding: 15px 50px;
   position: sticky;
   top: 0;
@@ -60,8 +60,8 @@ nav ul li a:hover {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background: #ffe604;
-  color: #111;
+  background: linear-gradient(135deg, #4400aa, #bd30ff);
+  color: #fff;
   min-height: 25vh;
   position: relative;
   overflow: hidden;
@@ -74,8 +74,8 @@ nav ul li a:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 80px; /* controls fade height */
-  background: linear-gradient(to bottom, rgba(255, 230, 4, 0) 0%, #f5f6fa 100%);
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(189, 48, 255, 0) 0%, #f5f6fa 100%);
   pointer-events: none;
 }
 
@@ -88,10 +88,11 @@ nav ul li a:hover {
 .hero-text h1 {
   font-size: 40px;
   margin-bottom: 10px;
+  color: #fff;
 }
 
 .hero-text span {
-  color: #111;
+  color: #4400aa;
   background: #fff;
   padding: 0 8px;
   border-radius: 5px;
@@ -100,11 +101,11 @@ nav ul li a:hover {
 .hero-text p {
   margin-bottom: 20px;
   font-size: 16px;
-  color: #333;
+  color: #eee;
 }
 
 .btn {
-  background: #111;
+  background: linear-gradient(90deg, #4400aa, #bd30ff);
   color: #fff;
   padding: 10px 20px;
   border-radius: 6px;
@@ -114,46 +115,21 @@ nav ul li a:hover {
 
 .btn:hover {
   background: #fff;
-  color: #111;
-  border: 1px solid #111;
+  color: #4400aa;
+  border: 1px solid #4400aa;
 }
 
 /* Hero Image */
-.hero-img {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 1;
-}
-
-/* Circular white frame */
 .hero-img img {
-  width: 200px;        /* adjust size */
-  height: 200px;       /* make it square */
-  object-fit: cover;   /* crop nicely */
-  border-radius: 50%;  /* circular crop */
-  border: 4px solid #fff;  /* optional white border */
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.2); /* optional shadow */
-}
-
-/* Profile image with fade top & bottom */
-.hero-img .profile-pic img {
-  width: 300%;
-  height: 300%;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
-
-  /* Fade top & bottom inside circle */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: cover;
-  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-  mask-repeat: no-repeat;
-  mask-size: cover;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
 }
 
-/* About, Projects, Gallery, Contact */
+/* Sections */
 .about, .projects, .gallery, .contact {
   padding: 60px 50px;
   text-align: center;
@@ -162,66 +138,44 @@ nav ul li a:hover {
 .about h2, .projects h2, .gallery h2, .contact h2 {
   font-size: 28px;
   margin-bottom: 20px;
-  color: #000;
+  color: #4400aa;
 }
 
 /* Projects */
-.project-container {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
 .project-card {
   background: #fff;
   padding: 20px;
   border-radius: 12px;
   width: 280px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .project-card:hover {
   transform: translateY(-8px);
-}
-
-.project-card img {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  box-shadow: 0 8px 20px rgba(189,48,255,0.25);
 }
 
 /* Gallery */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
-}
-
-.gallery-grid img {
-  width: 100%;
-  border-radius: 10px;
-  transition: 0.3s;
-}
-
 .gallery-grid img:hover {
   transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(68,0,170,0.3);
 }
 
 /* Contact */
 .contact a {
-  color: #000;
+  color: #4400aa;
   text-decoration: none;
 }
 
 .contact a:hover {
   text-decoration: underline;
+  color: #bd30ff;
 }
 
 /* Footer */
 footer {
-  background: #111;
+  background: linear-gradient(90deg, #4400aa, #bd30ff);
   color: #fff;
   text-align: center;
   padding: 15px;

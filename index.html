@@ -5,257 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Portfolio</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      background: #fafafa;
-      color: #333;
-    }
-
-    header {
-      background: #222;
-      color: #fff;
-      padding: 15px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    nav .logo {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 20px;
-    }
-
-    nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-
-    nav ul li a:hover {
-      color: #ff9800;
-    }
-
-    /* Hero Section */
-    .hero {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 50px 20px;
-      flex-wrap: wrap;
-      background: #fff;
-    }
-
-    .hero-text {
-      flex: 1;
-      min-width: 280px;
-    }
-
-    .hero-text h1 {
-      font-size: 36px;
-    }
-
-    .hero-text span {
-      color: #ff9800;
-    }
-
-    .hero-text p {
-      margin: 15px 0;
-      font-size: 18px;
-    }
-
-    .hero-text .btn {
-      display: inline-block;
-      background: #ff9800;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 25px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-
-    .hero-text .btn:hover {
-      background: #e68900;
-    }
-
-    .hero-img img {
-      max-width: 300px;
-      width: 100%;
-      margin-top: 20px;
-    }
-
-    /* Sections */
-    section {
-      padding: 50px 20px;
-      text-align: center;
-    }
-
-    section h2 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #222;
-    }
-
-    /* Projects */
-    .project-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .project-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-    }
-
-    .project-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .project-card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-
-    /* Gallery */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 10px;
-    }
-
-    .gallery-grid img {
-      width: 100%;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-
-    /* Contact */
-    .contact p {
-      margin: 10px 0;
-      font-size: 16px;
-    }
-
-    .contact a {
-      color: #ff9800;
-      text-decoration: none;
-    }
-
-    .contact a:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #222;
-      color: #fff;
-    }
-
-    /* Cursor follower */
-    .cursor-follower {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 35px;
-      height: 35px;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(8px);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-      transition: transform 0.12s ease-out;
-      z-index: 9999;
-    }
-
-    /* Visitor Counter */
-    .visitor-counter {
-      position: fixed;
-      top: 70px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid #ddd;
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 500;
-      color: #333;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      z-index: 10000;
-      font-family: Arial, sans-serif;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .visitor-counter.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .visitor-counter span {
-      font-weight: bold;
-      font-size: 15px;
-      color: #ff9800;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      nav ul {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 10px;
-        width: 100%;
-        align-items: center;
-      }
-
-      .hero {
-        text-align: center;
-      }
-
-      .hero-text h1 {
-        font-size: 28px;
-      }
-
-      .hero-text p {
-        font-size: 16px;
-      }
-
-      .visitor-counter {
-        top: auto;
-        bottom: 20px;
-        right: 20px;
-      }
-    }
-  </style>
 </head>
 <body>
 
@@ -275,25 +24,30 @@
   <!-- Modern Cursor Follower -->
   <div class="cursor-follower"></div>
 
-  <!-- Visitor Counter -->
-  <div class="visitor-counter" id="visitor-box">
-    Visitor Count: <span id="visitor-count">0</span>
-  </div>
+  <style>
+    .cursor-follower {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 35px;
+      height: 35px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      transition: transform 0.12s ease-out;
+      z-index: 9999;
+    }
+  </style>
 
   <script>
     const follower = document.querySelector(".cursor-follower");
-
     document.addEventListener("mousemove", (e) => {
       follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
     });
-
-    // Visitor Counter using countapi
-    fetch("https://api.countapi.xyz/hit/farhan-portfolio-unique/visits")
-      .then(res => res.json())
-      .then(res => {
-        document.getElementById("visitor-count").innerText = res.value;
-        document.getElementById("visitor-box").classList.add("visible"); // fade-in effect
-      });
   </script>
 
   <!-- Hero Section -->
@@ -334,12 +88,12 @@
       <div class="project-card">
         <img src="images/WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Project 3">
         <h3>Sports Events</h3>
-        <p>Designed shirts, trophies & more for Riphah International University Sports 2025</p>
+        <p>Covered all Sports event designs including shirts and trophies etc. for Riphah International University 2025</p>
       </div>
       <div class="project-card">
         <img src="images/1730016548182.jpg" alt="Project 4">
         <h3>Fun Events</h3>
-        <p>Designed for 20+ Events at Riphah International University 2023-2025</p>
+        <p>Covered Designs for 20+ Events held in Riphah International University 2023-2025</p>
       </div>
     </div>
   </section>
@@ -374,7 +128,29 @@
   <!-- Footer -->
   <footer>
     <p>&copy; 2025 - Farhan Ahmed. All Rights Reserved.</p>
+    <p class="visitor-counter">👀 Visitors: <span id="visitorCount">0</span></p>
   </footer>
+
+  <!-- Counter Script -->
+  <script>
+    // simple unique visitor counter using localStorage
+    async function updateVisitorCount() {
+      const countEl = document.getElementById("visitorCount");
+
+      // Simulating backend with localStorage for demo
+      let count = localStorage.getItem("visitorCount") || 0;
+
+      if (!localStorage.getItem("visited")) {
+        count++;
+        localStorage.setItem("visitorCount", count);
+        localStorage.setItem("visited", "true");
+      }
+
+      countEl.textContent = count;
+    }
+
+    updateVisitorCount();
+  </script>
 
 </body>
 </html>

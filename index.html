@@ -11,6 +11,44 @@
       backdrop-filter: blur(10px);
       background: rgba(255, 255, 255, 0.05);
       border-bottom: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 1.5rem;
+    }
+    nav h2.logo {
+      font-size: 1.3rem;
+      text-align: center;
+      flex: 1;
+    }
+    nav ul {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* --- Mobile Navbar Fix --- */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      nav h2.logo {
+        order: -1;
+        font-size: 1.2rem;
+      }
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      nav ul li a {
+        font-size: 0.9rem;
+      }
     }
 
     /* --- Floating Particles Background --- */
@@ -101,7 +139,12 @@
       <a href="#projects" class="btn">See My Work</a>
     </div>
     <div class="hero-img reveal">
-      <img src="images/570a2fb6-5027-409e-9647-02d8d4ffaaff-removebg-preview.png" alt="Farhan Ahmed">
+      <!-- Optimized profile image -->
+      <img src="images/570a2fb6-5027-409e-9647-02d8d4ffaaff-removebg-preview.png" 
+           alt="Farhan Ahmed" 
+           width="300" height="300" 
+           loading="eager" decoding="async"
+           style="border-radius: 50%; box-shadow: 0 0 20px rgba(0,0,0,0.3);">
     </div>
   </section>
 

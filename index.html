@@ -9,7 +9,7 @@
 <body>
 
   <!-- Navbar -->
-  <header>
+  <header class="animated-bg">
     <nav>
       <h2 class="logo">MyPortfolio</h2>
       <ul>
@@ -51,7 +51,7 @@
   </script>
 
   <!-- Hero Section -->
-  <section class="hero">
+  <section class="hero animated-bg">
     <div class="hero-text">
       <h1>Hi, I’m <span>Farhan Ahmed</span></h1>
       <p>A passionate <strong>Graphic Designer | Front-End Developer | SAP B1 Enthusiast</strong></p>
@@ -121,12 +121,12 @@
   <section id="contact" class="contact">
     <h2>Contact Me</h2>
     <p>Email: <a href="mailto:farhan.riphah21.com">farhan.riphah21.com</a></p>
-    <p>LinkedIn: <a href="#">https://www.linkedin.com/in/farhan-ahmed-39732223b/</a></p>
-    <p>Whatsapp: <a href="#">+92 316 5743324</a></p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/farhan-ahmed-39732223b/" target="_blank">Farhan Ahmed</a></p>
+    <p>Whatsapp: <a href="https://wa.me/923165743324" target="_blank">+92 316 5743324</a></p>
   </section>
 
   <!-- Footer -->
-  <footer>
+  <footer class="animated-bg">
     <p>&copy; 2025 - Farhan Ahmed. All Rights Reserved.</p>
     <p class="visitor-counter">👀 Visitors: <span id="visitorCount">0</span></p>
   </footer>
@@ -134,10 +134,9 @@
   <!-- Counter Script -->
   <script>
     // simple unique visitor counter using localStorage
-    async function updateVisitorCount() {
+    function updateVisitorCount() {
       const countEl = document.getElementById("visitorCount");
 
-      // Simulating backend with localStorage for demo
       let count = localStorage.getItem("visitorCount") || 0;
 
       if (!localStorage.getItem("visited")) {

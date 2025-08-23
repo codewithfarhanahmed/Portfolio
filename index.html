@@ -6,7 +6,7 @@
   <title>Farhan Ahmed | Portfolio</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* --- Glassy Navbar --- */
+    /* --- Navbar --- */
     nav {
       backdrop-filter: blur(10px);
       background: rgba(255, 255, 255, 0.05);
@@ -14,100 +14,72 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.7rem 1.5rem;
+      padding: 0.8rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      max-width: auto;
+    
     }
     nav h2.logo {
       font-size: 1.3rem;
-      text-align: center;
-      flex: 1;
+      font-weight: bold;
+      white-space: nowrap;
+      color: white;
     }
     nav ul {
       display: flex;
-      gap: 1rem;
+      gap: 1.2rem;
       list-style: none;
+      flex-wrap: nowrap;
     }
     nav ul li a {
       color: white;
       text-decoration: none;
       font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #ffd6ff;
     }
 
-    /* --- Mobile Navbar Fix --- */
-    @media (max-width: 768px) {
-      nav {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      nav h2.logo {
-        order: -1;
-        font-size: 1.2rem;
-      }
-      nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      nav ul li a {
-        font-size: 0.9rem;
-      }
-    }
-
-    /* --- Floating Particles Background --- */
-    .particles {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
-      overflow: hidden;
-    }
-    .particle {
-      position: absolute;
-      width: 8px; height: 8px;
-      background: rgba(255,255,255,0.4);
-      border-radius: 50%;
-      animation: float 15s infinite linear;
-    }
-    @keyframes float {
-      from { transform: translateY(100vh) scale(0.5); opacity: 0.5; }
-      to   { transform: translateY(-10vh) scale(1); opacity: 0; }
-    }
-
-    /* --- Reveal Animations --- */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s ease;
-    }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* --- Project Card Hover Tilt --- */
-    .project-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .project-card:hover {
-      transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    }
-
-    /* --- Gallery Modal --- */
-    .modal {
+    /* --- Hamburger --- */
+    .hamburger {
       display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
     }
-    .modal img {
-      max-width: 90%;
-      max-height: 80%;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 3px;
+      transition: all 0.3s ease;
     }
+
+    /* --- Mobile Navbar --- */
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background: rgba(0,0,0,0.85);
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        padding: 1rem;
+        border-radius: 8px;
+      }
+      nav ul.show {
+        display: flex;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* Other sections remain same (hero, about, projects, etc.) */
   </style>
 </head>
 <body>
@@ -119,17 +91,20 @@
   <header class="animated-bg">
     <nav>
       <h2 class="logo">Farhan’s Portfolio</h2>
-      <ul>
+      <ul id="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <!-- Hamburger Icon -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </nav>
   </header>
-
-  <!-- Modern Cursor Follower -->
-  <div class="cursor-follower"></div>
 
   <!-- Hero Section -->
   <section class="hero animated-bg">
@@ -139,7 +114,6 @@
       <a href="#projects" class="btn">See My Work</a>
     </div>
     <div class="hero-img reveal">
-      <!-- Optimized profile image -->
       <img src="images/570a2fb6-5027-409e-9647-02d8d4ffaaff-removebg-preview.png" 
            alt="Farhan Ahmed" 
            width="300" height="300" 
@@ -163,7 +137,7 @@
     <div class="project-container">
       <div class="project-card"><img src="images/Savify Brochure.jpg" alt="Savify"><h3>Savify</h3><p>Brochures for Multi-vendor E-commerce platform.</p></div>
       <div class="project-card"><img src="images/1733347118203.jpg" alt="Job Fairs"><h3>Job Fairs</h3><p>Covered Job Fair Designs for Riphah University 2023-25.</p></div>
-      <div class="project-card"><img src="images/WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Sports"><h3>Sports Events</h3><p>Sports event designs including shirts and trophies.</p></div>
+      <div class="project-card"><img src="images/WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Sports"><h3>Sports</h3><p>Sports event designs including shirts and trophies.</p></div>
       <div class="project-card"><img src="images/1730016548182.jpg" alt="Fun Events"><h3>Fun Events</h3><p>Designed for 20+ events at Riphah University 2023-25.</p></div>
     </div>
   </section>
@@ -183,11 +157,6 @@
     </div>
   </section>
 
-  <!-- Modal for Gallery -->
-  <div class="modal" id="modal">
-    <img id="modal-img" src="" alt="">
-  </div>
-
   <!-- Contact Section -->
   <section id="contact" class="contact reveal">
     <h2>Contact Me</h2>
@@ -204,75 +173,38 @@
 
   <!-- Scripts -->
   <script>
-    // Cursor Follower
-    const follower = document.querySelector(".cursor-follower");
-    document.addEventListener("mousemove", e => {
-      follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    });
+    // Hamburger Toggle
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("nav-links");
 
-    // Visitor Counter
-    function updateVisitorCount() {
-      const countEl = document.getElementById("visitorCount");
-      let count = localStorage.getItem("visitorCount") || 0;
-      if (!localStorage.getItem("visited")) {
-        count++;
-        localStorage.setItem("visitorCount", count);
-        localStorage.setItem("visited", "true");
-      }
-      countEl.textContent = count;
-    }
-    updateVisitorCount();
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
 
     // Typing Effect
-    const roles = ["Graphic Designer", "Front-End Developer", "SAP B1 Enthusiast", "AI Explorer"];
-    let i = 0, j = 0;
-    const typingEl = document.getElementById("typing");
-    function typing() {
-      if (j < roles[i].length) {
-        typingEl.textContent += roles[i][j];
-        j++;
-        setTimeout(typing, 100);
-      } else {
-        setTimeout(() => {
-          typingEl.textContent = "";
-          j = 0; i = (i+1)%roles.length;
-          typing();
-        }, 2000);
+    const roles = ["Front-End Developer", "Graphic Designer", "AI Enthusiast", "SAP B1 Consultant"];
+    let i = 0, j = 0, currentRole = "", isDeleting = false;
+    function typeEffect() {
+      currentRole = roles[i];
+      document.getElementById("typing").textContent = currentRole.substring(0, j);
+      if (!isDeleting && j++ === currentRole.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, 1000);
+        return;
       }
+      if (isDeleting && j-- === 0) {
+        isDeleting = false;
+        i = (i + 1) % roles.length;
+      }
+      setTimeout(typeEffect, isDeleting ? 50 : 150);
     }
-    typing();
+    typeEffect();
 
-    // Scroll Reveal
-    const reveals = document.querySelectorAll(".reveal");
-    window.addEventListener("scroll", () => {
-      reveals.forEach(el => {
-        const windowHeight = window.innerHeight;
-        const revealTop = el.getBoundingClientRect().top;
-        if (revealTop < windowHeight - 50) el.classList.add("active");
-      });
-    });
-
-    // Gallery Modal
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modal-img");
-    document.querySelectorAll(".gallery-grid img").forEach(img => {
-      img.addEventListener("click", () => {
-        modal.style.display = "flex";
-        modalImg.src = img.src;
-      });
-    });
-    modal.addEventListener("click", () => modal.style.display = "none");
-
-    // Floating Particles
-    const particles = document.getElementById("particles");
-    for(let i=0; i<30; i++){
-      const p = document.createElement("div");
-      p.classList.add("particle");
-      p.style.left = Math.random()*100+"vw";
-      p.style.animationDuration = (10+Math.random()*10)+"s";
-      p.style.width = p.style.height = (3+Math.random()*6)+"px";
-      particles.appendChild(p);
-    }
+    // Visitor Counter (local simulation)
+    let count = localStorage.getItem("visitorCount") || 0;
+    count++;
+    localStorage.setItem("visitorCount", count);
+    document.getElementById("visitorCount").textContent = count;
   </script>
 </body>
 </html>

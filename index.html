@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Portfolio</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <link rel="stylesheet" href="style.css"/>
 
-  <!-- Navbar -->
-  <header>
-    <nav>
-      <h2 class="logo">MyPortfolio</h2>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-  <!-- Modern Cursor Follower -->
-  <div class="cursor-follower"></div>
+  <!-- Google Model Viewer -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js"></script>
 
   <style>
+    /* Fullscreen 3D model background */
+    model-viewer#bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Modern cursor */
     .cursor-follower {
       position: fixed;
       top: 0;
@@ -41,14 +38,36 @@
       z-index: 9999;
     }
   </style>
+</head>
+<body>
 
-  <script>
-    const follower = document.querySelector(".cursor-follower");
+  <!-- Keep your existing HTML -->
+<model-viewer id="bg"
+  src="model/ak47.glb"
+  alt="3D AK-47 Model"
+  auto-rotate
+  camera-controls
+  disable-zoom
+  shadow-intensity="1"
+  exposure="1.2"
+  rotation-per-second="30deg"
+  autoplay>
+</model-viewer>
 
-    document.addEventListener("mousemove", (e) => {
-      follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    });
-  </script>
+  <div class="cursor-follower"></div>
+
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <h2 class="logo">MyPortfolio</h2>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -58,7 +77,7 @@
       <a href="#projects" class="btn">See My Work</a>
     </div>
     <div class="hero-img">
-      <img src="images\570a2fb6-5027-409e-9647-02d8d4ffaaff-removebg-preview.png" alt="Profile">
+      <img src="images/570a2fb6-5027-409e-9647-02d8d4ffaaff-removebg-preview.png" alt="Profile"/>
     </div>
   </section>
 
@@ -75,23 +94,23 @@
   <section id="projects" class="projects">
     <h2>My Projects</h2>
     <div class="project-container">
-    <div class="project-card">
-        <img src="images\Savify Brochure.jpg" alt="Project 1">
+      <div class="project-card">
+        <img src="images/Savify Brochure.jpg" alt="Project 1"/>
         <h3>Savify</h3>
         <p>Brochures for Multi-vendor E-commerce platform.</p>
       </div>
       <div class="project-card">
-        <img src="images\1733347118203.jpg" alt="Project 1">
+        <img src="images/1733347118203.jpg" alt="Project 2"/>
         <h3>Job Fairs</h3>
         <p>Covered all Job Fair Designs for Riphah International University 2023-2025</p>
       </div>
       <div class="project-card">
-        <img src="images\WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Project 1">
+        <img src="images/WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Project 3"/>
         <h3>Sports Events</h3>
         <p>Covered all Sports event designs including shirts and trophies etc. for Riphah International University 2025</p>
       </div>
       <div class="project-card">
-        <img src="images\1730016548182.jpg" alt="Project 1">
+        <img src="images/1730016548182.jpg" alt="Project 4"/>
         <h3>Fun Events</h3>
         <p>Covered Designs for 20+ Events held in Riphah International University 2023-2025</p>
       </div>
@@ -102,18 +121,18 @@
   <section id="gallery" class="gallery">
     <h2>Glimpse</h2>
     <div class="gallery-grid">
-      <img src="images\Job Fair 2.jpg" alt="Gallery 1">
-      <img src="images\Job Fair.jpg" alt="Gallery 2">
-      <img src="images\1733346676660.jpg" alt="Gallery 3">
-      <img src="images\Savify Brochure 2.jpg" alt="Gallery 4">
-      <img src="images\WhatsApp Image 2025-08-21 at 16.08.45.jpeg" alt="Gallery 5">
-      <img src="images\WhatsApp Image 2025-08-21 at 16.09.53 (1).jpeg" alt="Gallery 6">
-      <img src="images\WhatsApp Image 2025-08-21 at 16.09.55.jpeg" alt="Gallery 7">
-      <img src="images\WhatsApp Image 2025-08-21 at 16.09.55 (1).jpeg" alt="Gallery 8">
-      <img src="images\WhatsApp Image 2025-08-21 at 16.09.56 (1).jpeg" alt="Gallery 9">
-      <img src="images\WhatsApp Image 2025-08-21 at 16.09.57.jpeg" alt="Gallery 10">
-      <img src="images\WhatsApp Image 2025-08-21 at 16.10.00 (1).jpeg" alt="Gallery 11">
-      <img src="images\WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Gallery 12">
+      <img src="images/Job Fair 2.jpg" alt="Gallery 1"/>
+      <img src="images/Job Fair.jpg" alt="Gallery 2"/>
+      <img src="images/1733346676660.jpg" alt="Gallery 3"/>
+      <img src="images/Savify Brochure 2.jpg" alt="Gallery 4"/>
+      <img src="images/WhatsApp Image 2025-08-21 at 16.08.45.jpeg" alt="Gallery 5"/>
+      <img src="images/WhatsApp Image 2025-08-21 at 16.09.53 (1).jpeg" alt="Gallery 6"/>
+      <img src="images/WhatsApp Image 2025-08-21 at 16.09.55.jpeg" alt="Gallery 7"/>
+      <img src="images/WhatsApp Image 2025-08-21 at 16.09.55 (1).jpeg" alt="Gallery 8"/>
+      <img src="images/WhatsApp Image 2025-08-21 at 16.09.56 (1).jpeg" alt="Gallery 9"/>
+      <img src="images/WhatsApp Image 2025-08-21 at 16.09.57.jpeg" alt="Gallery 10"/>
+      <img src="images/WhatsApp Image 2025-08-21 at 16.10.00 (1).jpeg" alt="Gallery 11"/>
+      <img src="images/WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Gallery 12"/>
     </div>
   </section>
 
@@ -121,8 +140,8 @@
   <section id="contact" class="contact">
     <h2>Contact Me</h2>
     <p>Email: <a href="mailto:farhan.riphah21.com">farhan.riphah21.com</a></p>
-    <p>LinkedIn: <a href="#">https://www.linkedin.com/in/farhan-ahmed-39732223b/</a></p>
-    <p>Whatsapp: <a href="#">+92 316 5743324</a></p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/farhan-ahmed-39732223b/">My LinkedIn</a></p>
+    <p>Whatsapp: <a href="https://wa.me/923165743324">+92 316 5743324</a></p>
   </section>
 
   <!-- Footer -->
@@ -130,5 +149,12 @@
     <p>&copy; 2025 - Farhan Ahmed. All Rights Reserved.</p>
   </footer>
 
+  <!-- Cursor follower script -->
+  <script>
+    const follower = document.querySelector(".cursor-follower");
+    document.addEventListener("mousemove", (e) => {
+      follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    });
+  </script>
 </body>
 </html>

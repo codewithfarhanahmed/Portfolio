@@ -17,6 +17,7 @@ html, body {
   background: #000; /* Jet Black */
 }
 
+
 /* Navbar */
 header {
   position: fixed;
@@ -55,23 +56,23 @@ header nav ul li a:hover { color: #f9d342; }
 }
 .hero-content { flex: 1; max-width: 600px; }
 .hero-content h1 { font-size: 3rem; font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
-.hero-content h1 span { color: #f9d342; }
+.hero-content h1 span { color: #ffffff; }
 .hero-content p { font-size: 1.1rem; margin-bottom: 1.8rem; color: #ccc; line-height: 1.6; }
 
 /* Hero button */
 .hero .btn {
   padding: 0.8rem 1.6rem;
   font-size: 1rem;
-  border: 2px solid #f9d342;
+  border: 2px solid #ffffff;
   border-radius: 40px;
   background: transparent;
-  color: #f9d342;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s ease;
 }
 .hero .btn:hover {
-  background: #f9d342;
+  background: #ffffff;
   color: #000;
   transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(249, 211, 66, 0.25);
@@ -102,7 +103,7 @@ section {
 section.visible { opacity: 1; transform: translateY(0); }
 
 /* Section titles */
-section h2 { font-size: 28px; color: #f9d342; margin-bottom: 20px; }
+section h2 { font-size: 28px; color: #ffffff; margin-bottom: 20px; }
 
 /* Projects Carousel */
 .projects-carousel {
@@ -172,7 +173,7 @@ section h2 { font-size: 28px; color: #f9d342; margin-bottom: 20px; }
 
 /* Contact links */
 .contact a { color: #fff; text-decoration: none; transition: 0.3s; }
-.contact a:hover { color: #f9d342; text-decoration: underline; }
+.contact a:hover { color: #ffffff; text-decoration: underline; }
 
 /* Footer */
 footer {

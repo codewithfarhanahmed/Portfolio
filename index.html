@@ -12,7 +12,7 @@
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1; /* behind all content */
+      z-index: -1;
       background: #000;
     }
 
@@ -33,7 +33,7 @@
     #start-btn {
       padding: 20px 40px;
       font-size: 28px;
-      background: #f9d342;
+      background: #fff;
       border: none;
       border-radius: 12px;
       cursor: pointer;
@@ -44,7 +44,7 @@
 
     #start-btn:hover {
       transform: scale(1.05);
-      background: #ffd633;
+      background: #e0e0e0;
     }
 
     /* Fade-in animation for main site */
@@ -57,14 +57,137 @@
       to {opacity:1;}
     }
 
-    /* Music toggle button removed; handled via start button */
+    /* Scroll fade-in effect */
+    section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* General Colors */
+    body, h1, h2, h3, p, a, span {
+      color: #fff; /* all text white */
+    }
+
+    body {
+      background: #000;
+      font-family: Arial, sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    nav ul li a {
+      color: #fff;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ccc;
+    }
+
+    header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 40px;
+      background: rgba(0,0,0,0.6);
+      position: fixed;
+      top:0;
+      left:0;
+      width:100%;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff; /* white logo text */
+    }
+
+    nav ul {
+      list-style:none;
+      display:flex;
+      gap:20px;
+    }
+
+    .hero {
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+    }
+
+    .btn {
+      background:#fff;
+      color:#000;
+      padding:12px 24px;
+      border-radius:8px;
+      font-weight:bold;
+      display:inline-block;
+      margin-top:20px;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background:#e0e0e0;
+    }
+
+    .projects-carousel {
+      display:flex;
+      gap:20px;
+      overflow-x:auto;
+      scroll-behavior:smooth;
+      padding:20px 0;
+      cursor: grab;
+    }
+
+    .project-card {
+      min-width:250px;
+      background:#111;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 0 10px rgba(255,255,255,0.1);
+      color:#fff;
+    }
+
+    .project-card img {
+      width:100%;
+      display:block;
+    }
+
+    .gallery-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap:15px;
+    }
+
+    .gallery-grid img {
+      width:100%;
+      border-radius:8px;
+    }
+
+    footer {
+      text-align:center;
+      padding:20px;
+      background:#111;
+      margin-top:40px;
+      color:#fff;
+    }
   </style>
 </head>
 <body>
 
   <!-- Splash / Start Screen -->
   <div id="start-screen">
-    <button id="start-btn">Let's Start</button>
+    <button id="start-btn">View Portfolio!</button>
   </div>
 
   <!-- Main Site -->
@@ -72,7 +195,7 @@
 
     <!-- Navbar -->
     <header>
-      <div class="logo">MyPortfolio</div>
+      <div class="logo">Farhan Ahmed</div>
       <nav>
         <ul>
           <li><a href="#hero">Home</a></li>
@@ -84,14 +207,13 @@
     </header>
 
     <!-- Hero Section -->
-<section class="hero" id="hero">
-  <div class="hero-content">
-    <h1>Hi! I'm <span>Farhan Ahmed</span></h1>
-    <p>I am <span id="typed-text"></span></p>
-    <a href="#projects" class="btn">View My Work</a>
-  </div>
-</section>
-
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <h1>Hi! I'm <span>Farhan Ahmed</span></h1>
+        <p>I am <span id="typed-text"></span></p>
+        <a href="#projects" class="btn">View My Work</a>
+      </div>
+    </section>
 
     <!-- Projects Section -->
     <section id="projects">
@@ -164,11 +286,10 @@
     const mainSite = document.getElementById("main-site");
     const music = document.getElementById("bg-music");
 
-    // Fade-in function for music
     function fadeInMusic() {
       music.volume = 0;
       const fadeStep = 0.02;
-      const fadeInterval = 30; // ms
+      const fadeInterval = 30;
       const fade = setInterval(() => {
         if(music.volume < 1){
           music.volume = Math.min(music.volume + fadeStep, 1);
@@ -178,18 +299,15 @@
       }, fadeInterval);
     }
 
-    // On click of "Let's Start"
     startBtn.addEventListener("click", () => {
-      startScreen.style.display = "none";       // Hide start screen
-      mainSite.style.display = "block";         // Show main site
-      mainSite.classList.add("fade-in");        // Fade in animation
-
-      // Play music with fade-in
+      startScreen.style.display = "none";
+      mainSite.style.display = "block";
+      mainSite.classList.add("fade-in");
       music.play().then(fadeInMusic).catch(console.log);
     });
   </script>
 
-  <!-- JS: fade-in sections on scroll -->
+  <!-- Scroll fade-in effect -->
   <script>
     const sections = document.querySelectorAll("section");
     const observer = new IntersectionObserver(entries => {
@@ -202,7 +320,7 @@
     sections.forEach(section => observer.observe(section));
   </script>
 
-  <!-- JS: draggable carousel -->
+  <!-- Draggable carousel -->
   <script>
     const carousel = document.querySelector('.projects-carousel');
     let isDown = false;
@@ -220,102 +338,89 @@
       if(!isDown) return;
       e.preventDefault();
       const x = e.pageX - carousel.offsetLeft;
-      const walk = (x - startX) * 2; // drag speed
+      const walk = (x - startX) * 2;
       carousel.scrollLeft = scrollLeft - walk;
     });
   </script>
+
+  <!-- Typing animation -->
   <script>
-const phrases = [
-  "a Graphics Designer.",
-  "a Front-End Developer.",
-  "a Creative Thinker.",
-  "a Visual Storyteller."
-];
+    const phrases = [
+      "a Graphics Designer.",
+      "a Front-End Developer.",
+      "a Creative Thinker.",
+      "a Visual Storyteller."
+    ];
+    let currentPhrase = 0;
+    let currentChar = 0;
+    let typingSpeed = 100;
+    let deleting = false;
+    const typedText = document.getElementById("typed-text");
 
-let currentPhrase = 0;
-let currentChar = 0;
-let typingSpeed = 100; // ms per character
-let deleting = false;
-
-const typedText = document.getElementById("typed-text");
-
-function type() {
-  const fullText = phrases[currentPhrase];
-  if(!deleting){
-    typedText.textContent = fullText.substring(0, currentChar + 1);
-    currentChar++;
-    if(currentChar === fullText.length){
-      deleting = true;
-      setTimeout(type, 1500); // pause at full text
-      return;
+    function type() {
+      const fullText = phrases[currentPhrase];
+      if(!deleting){
+        typedText.textContent = fullText.substring(0, currentChar + 1);
+        currentChar++;
+        if(currentChar === fullText.length){
+          deleting = true;
+          setTimeout(type, 1500);
+          return;
+        }
+      } else {
+        typedText.textContent = fullText.substring(0, currentChar - 1);
+        currentChar--;
+        if(currentChar === 0){
+          deleting = false;
+          currentPhrase = (currentPhrase + 1) % phrases.length;
+        }
+      }
+      setTimeout(type, typingSpeed);
     }
-  } else {
-    typedText.textContent = fullText.substring(0, currentChar - 1);
-    currentChar--;
-    if(currentChar === 0){
-      deleting = false;
-      currentPhrase = (currentPhrase + 1) % phrases.length;
-    }
-  }
-  setTimeout(type, typingSpeed);
-}
+    document.addEventListener("DOMContentLoaded", () => { type(); });
+  </script>
 
-document.addEventListener("DOMContentLoaded", () => {
-  type();
-});
-</script>
-
-
- <!-- Animated doodle background -->
-<canvas id="scene"></canvas>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("scene"), alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-
-  // Glowing sphere (doubled size)
-  const geometry = new THREE.IcosahedronGeometry(3, 3);
-  const material = new THREE.MeshPhongMaterial({
-    color: 0xf9d342,
-    emissive: 0xf9d342,
-    emissiveIntensity: 0.5,
-    shininess: 80,
-    wireframe: true
-  });
-  const sphere = new THREE.Mesh(geometry, material);
-  sphere.position.set(0, 0, 0); // Centered
-  scene.add(sphere);
-
-  // Lights
-  const pointLight = new THREE.PointLight(0xf9d342, 1.2, 100);
-  pointLight.position.set(5, 5, 5);
-  scene.add(pointLight);
-
-  const ambientLight = new THREE.AmbientLight(0x222222);
-  scene.add(ambientLight);
-
-  // Camera distance
-  camera.position.z = 1;
-
-  // Animation
-  function animate() {
-    requestAnimationFrame(animate);
-    sphere.rotation.x += 0.003;
-    sphere.rotation.y += 0.004;
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  // Handle window resize
-  window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+  <!-- Animated doodle background -->
+  <canvas id="scene"></canvas>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("scene"), alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-</script>
 
+    // Glowing white sphere
+    const geometry = new THREE.IcosahedronGeometry(3, 3);
+    const material = new THREE.MeshPhongMaterial({
+      color: 0xffffff,
+      emissive: 0xffffff,
+      emissiveIntensity: 0.5,
+      shininess: 80,
+      wireframe: true
+    });
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
 
+    const pointLight = new THREE.PointLight(0xffffff, 1.2, 100);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
+    scene.add(new THREE.AmbientLight(0x222222));
+
+    camera.position.z = 1;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      sphere.rotation.x += 0.003;
+      sphere.rotation.y += 0.004;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
 </body>
 </html>

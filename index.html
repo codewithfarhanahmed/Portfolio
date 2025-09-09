@@ -1,426 +1,652 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Farhan Ahmed | Portfolio</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Farhan Ahmed - Designer, Developer & SAP enthusiast. Portfolio with 3D wireframe globe background." />
   <style>
-    /* Canvas background */
-    #scene {
+    /* ================= GOOGLE FONT ================= */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+
+    /* ================= RESET ================= */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',sans-serif;
+      color:#111;
+      background:#000; /* fallback while canvas loads */
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-y:auto;
+      scroll-behavior:smooth;
+      line-height:1.4;
+    }
+
+    /* ================= CANVAS BACKGROUND ================= */
+    #bg-canvas {
       position: fixed;
-      top: 0; left: 0;
+      inset: 0;
       width: 100%;
       height: 100%;
+      z-index: -2; /* always behind content */
+      display: block;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, rgba(10,10,20,0.20), rgba(0,0,0,0.45));
+    }
+    /* subtle vignette for depth */
+    .bg-vignette {
+      position: fixed;
+      inset: 0;
       z-index: -1;
-      background: #000;
+      pointer-events: none;
+      background: radial-gradient(60% 60% at 50% 40%, rgba(255,255,255,0.02), rgba(0,0,0,0.35) 60%);
+      mix-blend-mode: overlay;
     }
 
-    /* Splash / Start Screen */
-    #start-screen {
-      position: fixed;
-      top:0; left:0;
-      width:100%;
+    /* ================= START / SPLASH ================= */
+    #start-screen{
+      position:fixed; inset:0;
+      display:flex; gap:18px; align-items:center; justify-content:center;
+      flex-direction:column; background:#ffffff; z-index:10020;
+    }
+    #start-screen .title{
+      font-size:26px; font-weight:700; color:#111; letter-spacing:0.2px;
+    }
+    #start-btn{
+      background:#000; color:#fff; border:none; padding:14px 30px; border-radius:12px; font-size:18px;
+      cursor:pointer; box-shadow:0 12px 30px rgba(0,0,0,0.12);
+    }
+    #transition-overlay{
+      position:fixed; inset:0; z-index:10019; pointer-events:none;
+      background: radial-gradient(circle at center, #fff 0%, #fff 70%);
+      transform: scale(0); border-radius:50%;
+    }
+    #transition-overlay.active { animation: overlayExpand 1.05s forwards ease-in-out; }
+    @keyframes overlayExpand { 0%{transform:scale(0);opacity:1} 70%{transform:scale(3);opacity:1} 100%{transform:scale(10);opacity:0} }
+
+    /* ================= SCROLL SNAP MAIN ================= */
+    main{
       height:100%;
-      background: #000;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      z-index: 10000;
-      flex-direction: column;
+      scroll-snap-type: y mandatory;
+      overflow-y:auto;
+      position:relative;
+      z-index:2; /* content above canvas */
     }
-
-    #start-btn {
-      padding: 20px 40px;
-      font-size: 28px;
-      background: #fff;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      color: #000;
-      font-weight: bold;
-      transition: transform 0.2s, background 0.3s;
-    }
-
-    #start-btn:hover {
-      transform: scale(1.05);
-      background: #e0e0e0;
-    }
-
-    /* Fade-in animation for main site */
-    .fade-in {
-      animation: fadeIn 1.5s forwards;
-    }
-
-    @keyframes fadeIn {
-      from {opacity:0;}
-      to {opacity:1;}
-    }
-
-    /* Scroll fade-in effect */
-    section {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* General Colors */
-    body, h1, h2, h3, p, a, span {
-      color: #fff; /* all text white */
-    }
-
-    body {
-      background: #000;
-      font-family: Arial, sans-serif;
-    }
-
-    a {
-      text-decoration: none;
-    }
-
-    nav ul li a {
-      color: #fff;
-      transition: color 0.3s;
-    }
-
-    nav ul li a:hover {
-      color: #ccc;
-    }
-
-    header {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:20px 40px;
-      background: rgba(0,0,0,0.6);
-      position: fixed;
-      top:0;
-      left:0;
+    section{
+      min-height:100vh;
       width:100%;
-      z-index: 1000;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #fff; /* white logo text */
-    }
-
-    nav ul {
-      list-style:none;
       display:flex;
-      gap:20px;
-    }
-
-    .hero {
-      height:100vh;
-      display:flex;
-      justify-content:center;
       align-items:center;
-      text-align:center;
+      justify-content:center;
+      padding: 64px 28px;
+      scroll-snap-align:start;
+      position:relative;
     }
+
+    /* ================= NAVBAR ================= */
+    nav{
+      position:fixed; top:18px; left:20px; right:20px;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 18px; background: rgba(255,255,255,0.04);
+      border-radius:12px; z-index:10010; backdrop-filter: blur(6px);
+      box-shadow:0 6px 18px rgba(0,0,0,0.3);
+    }
+    .logo{ font-weight:700; color:#fff; letter-spacing:0.4px; font-size:18px }
+    nav ul{ list-style:none; display:flex; gap:14px; align-items:center; margin-left:8px }
+    nav a{
+      color: rgba(255,255,255,0.92); text-decoration:none; font-weight:500;
+      padding:6px 8px; border-radius:8px;
+      transition: all .18s ease;
+    }
+    nav a:hover{ background: rgba(255,255,255,0.06); color:#80ccff }
+
+    /* ================= HERO ================= */
+    .hero-wrap { text-align:center; color:#fff; padding-top:40px; max-width:1100px; }
+    .hero-inner { width:100%; }
+    .hero-wrap h1 {
+      font-size: clamp(28px, 6vw, 64px);
+      font-weight:700; line-height:1.02; margin-bottom:12px;
+      text-shadow: 0 6px 26px rgba(0,0,0,0.6);
+    }
+    .hero-wrap p {
+      font-size: clamp(15px, 2vw, 20px); color:#e8eaf6; margin-bottom:20px;
+    }
+    #typed-text { color:#80ccff; font-weight:600 }
+
+    .cta-row { margin-top:20px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
 
     .btn {
-      background:#fff;
-      color:#000;
-      padding:12px 24px;
-      border-radius:8px;
-      font-weight:bold;
-      display:inline-block;
-      margin-top:20px;
-      transition: background 0.3s;
+      background:#80ccff; color:#111; border:none; padding:10px 18px; border-radius:10px; font-weight:700; cursor:pointer;
+      box-shadow:0 10px 26px rgba(255,213,120,0.08);
+    }
+    .btn.ghost { background:rgba(255,255,255,0.06); color:#fff; }
+
+    /* ================= ABOUT ================= */
+    .content-card {
+      background: rgba(255,255,255,0.03);
+      padding: 26px;
+      max-width: 960px;
+      border-radius: 14px;
+      color: #f5f5f7;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+    }
+    .content-card h2 { color: #fff; margin-bottom:10px; font-size:28px; }
+    .content-card p { color:#e6e6ea; line-height:1.7 }
+
+    /* ================= PROJECTS CAROUSEL ================= */
+    #projects h2 { color:#fff; margin-bottom:14px; font-size:26px; text-align:center }
+    .projects-carousel{
+      display:flex; gap:18px; overflow-x:auto; padding:18px 8px;
+      -webkit-overflow-scrolling:touch; scrollbar-width:none;
+    }
+    .projects-carousel::-webkit-scrollbar{display:none}
+    .project-card{
+      min-width:300px; max-width:360px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:14px; overflow:hidden; color:#fff;
+      box-shadow:0 14px 40px rgba(3,6,23,0.6);
+      transition: transform .32s ease, box-shadow .32s ease;
+      flex-shrink:0;
+    }
+    .project-card img{ width:100%; height:200px; object-fit:cover; display:block }
+    .project-card .meta{ padding:12px 14px }
+    .project-card h3{ font-size:18px; margin-bottom:6px }
+    .project-card p{ color:#dcdce2; font-size:14px }
+    .project-card:hover{ transform:translateY(-8px); box-shadow:0 22px 66px rgba(0,0,0,0.6) }
+
+    /* ================= GALLERY ================= */
+    #gallery h2 { color:#fff; margin-bottom:14px; font-size:26px; text-align:center }
+    .gallery-grid{
+      display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; width:100%;
+    }
+    .gallery-grid-item{ border-radius:10px; overflow:hidden; position:relative; box-shadow:0 12px 32px rgba(0,0,0,0.55) }
+    .gallery-grid-item img{ width:100%; height:260px; object-fit:cover; transition:transform .45s ease; display:block }
+    .gallery-grid-item:hover img{ transform:scale(1.05) }
+    .gallery-overlay{ position:absolute; left:0; right:0; bottom:0; padding:10px 12px; color:#fff; background:linear-gradient(to top, rgba(0,0,0,0.55), transparent); font-weight:700 }
+
+    /* ================= CONTACT/FOOTER ================= */
+    footer{ color:#cfcfd6; padding:18px; text-align:center }
+
+    /* ================= MUSIC CONTROL ================= */
+    .music-control{
+      position:fixed; bottom:22px; right:22px; z-index:10008;
+      background:rgba(255,255,255,0.06); color:#fff; padding:8px 12px; border-radius:20px; cursor:pointer; font-weight:600; backdrop-filter:blur(6px);
     }
 
-    .btn:hover {
-      background:#e0e0e0;
-    }
+    /* ================= REVEAL ANIMATIONS ================= */
+    .reveal{ opacity:0; transform:translateY(18px); transition:all .7s cubic-bezier(.2,.9,.3,1) }
+    .reveal.visible{ opacity:1; transform:translateY(0) }
 
-    .projects-carousel {
-      display:flex;
-      gap:20px;
-      overflow-x:auto;
-      scroll-behavior:smooth;
-      padding:20px 0;
-      cursor: grab;
+    /* ================= RESPONSIVE ================= */
+    @media (max-width:900px){
+      nav{ left:12px; right:12px; padding:8px }
+      .project-card{ min-width:260px; max-width:300px }
+      .gallery-grid-item img{ height:200px }
     }
-
-    .project-card {
-      min-width:250px;
-      background:#111;
-      border-radius:12px;
-      overflow:hidden;
-      box-shadow:0 0 10px rgba(255,255,255,0.1);
-      color:#fff;
-    }
-
-    .project-card img {
-      width:100%;
-      display:block;
-    }
-
-    .gallery-grid {
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 6fr));
-      gap:10px;
-    }
-
-    .gallery-grid img {
-      width:100%;
-      border-radius:8px;
-    }
-
-    footer {
-      text-align:center;
-      padding:20px;
-      background:#111;
-      margin-top:40px;
-      color:#fff;
+    @media (max-width:480px){
+      .hero-wrap h1{ font-size:28px }
+      .hero-wrap p{ font-size:15px }
+      .gallery-grid-item img{ height:160px }
+      nav ul{ display:none } /* simpler on mobile */
     }
   </style>
 </head>
 <body>
 
-  <!-- Splash / Start Screen -->
-  <div id="start-screen">
-    <button id="start-btn">View Portfolio!</button>
+  <!-- ================= BACKGROUND CANVAS ================= -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="bg-vignette"></div>
+
+  <!-- ================= START SCREEN ================= -->
+  <div id="start-screen" role="dialog" aria-modal="true">
+    <div class="title">Welcome — Farhan Ahmed</div>
+    <button id="start-btn">View Portfolio</button>
+    <div id="transition-overlay" aria-hidden="true"></div>
   </div>
 
-  <!-- Main Site -->
-  <div id="main-site" style="display:none; opacity:0;">
-
-    <!-- Navbar -->
-    <header>
-      <div class="logo">Farhan Ahmed</div>
-      <nav>
-        <ul>
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-      <div class="hero-content">
-        <h1>Hi! I'm <span>Farhan Ahmed</span></h1>
-        <p>I am <span id="typed-text"></span></p>
-        <a href="#projects" class="btn">View My Work</a>
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-      <div class="content-wrapper">
-        <h2>My Projects</h2>
-        <div class="projects-carousel">
-          <div class="project-card">
-            <img src="images/Savify Brochure.jpg" alt="Project 1"/>
-            <p>Brochure design project</p>
-          </div>
-          <div class="project-card">
-            <img src="images/1733347118203.jpg" alt="Project 2"/>
-            <p>Branding showcase</p>
-          </div>
-          <div class="project-card">
-            <img src="images/WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Project 3"/>
-            <p>Event poster design</p>
-          </div>
-          <div class="project-card">
-            <img src="images/1730016548182.jpg" alt="Project 4"/>
-            <p>Logo design concept</p>
-          </div>
-          <div class="project-card">
-            <img src="images/Job Fair 2.jpg" alt="Project 5"/>
-            <p>Job fair campaign</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery">
-      <div class="content-wrapper">
-        <h2>Gallery</h2>
-        <div class="gallery-grid">
-          <img src="images/Savify Brochure.jpg" alt="Gallery 1"/>
-          <img src="images/1733347118203.jpg" alt="Gallery 2"/>
-          <img src="images/WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Gallery 3"/>
-          <img src="images/1730016548182.jpg" alt="Gallery 4"/>
-          <img src="images/Job Fair 2.jpg" alt="Gallery 5"/>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-      <div class="content-wrapper contact">
-        <h2>Contact Me</h2>
-        <p>Email: <a href="mailto:farhan.riphah21@gmail.com">farhan.riphah21@gmail.com</a></p>
-        <p>LinkedIn: <a href="#">https://www.linkedin.com/in/farhan-ahmed-39732223b?</a></p>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <p>&copy; Portfolio updated by Farhan Ahmed - 03/09/2025</p>
-    </footer>
-
-  </div>
-
-  <!-- Background Music -->
-  <audio id="bg-music" loop>
+  <!-- ================= AUDIO ================= -->
+  <audio id="bg-music" loop preload="auto">
     <source src="music/showreel-music-promo-advertising-opener-vlog-background-intro-theme-261601.mp3" type="audio/mpeg">
   </audio>
+  <div class="music-control" id="music-control">▶ Play Music</div>
 
-  <!-- JS: Start Button, Fade-in & Music -->
+  <!-- ================= NAVBAR ================= -->
+  <nav>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <div class="logo">Farhan Ahmed</div>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <a class="btn ghost" href="#projects">View Work</a>
+      <a class="btn" href="mailto:codewithfarhanahmed@gmail.com">Hire Me</a>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN (SCROLL SNAP) ================= -->
+  <main id="main" tabindex="0">
+    <!-- HERO -->
+    <section id="hero" class="hero-wrap">
+      <div class="hero-inner">
+        <h1 class="reveal">Hi, I'm <span style="color:#80ccff">Farhan Ahmed</span></h1>
+        <p class="reveal">I am <span id="typed-text"></span></p>
+        <div class="cta-row reveal">
+          <a class="btn" href="#projects">See Projects</a>
+          <a class="btn ghost" href="#contact">Contact Me</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" style="display:flex; align-items:center; justify-content:center;">
+      <div class="content-card reveal">
+        <h2>About Me</h2>
+        <p>
+          I'm a Computer Science graduate, Front-end Dev, Associate SAP Business One Consultant, and passionate graphic designer.
+          I build creative digital solutions — from responsive websites and branding to AI-assisted design tools.
+        </p>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" style="flex-direction:column; align-items:flex-start;">
+      <h2 class="reveal">My Projects</h2>
+      <div class="projects-carousel reveal" aria-label="Projects carousel">
+        <div class="project-card">
+          <img src="images/Savify Brochure.jpg" alt="Savify Brochure">
+          <div class="meta"><h3>Savify Brochure</h3><p>Brochure design & layout for multi-vendor e-commerce project.</p></div>
+        </div>
+
+        <div class="project-card">
+          <img src="images/1733347118203.jpg" alt="Branding Showcase">
+          <div class="meta"><h3>Branding Showcase</h3><p>Complete brand kit and visual identity presentation.</p></div>
+        </div>
+
+        <div class="project-card">
+          <img src="images/WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Event Poster">
+          <div class="meta"><h3>Event Poster</h3><p>Poster and social assets for university sports event.</p></div>
+        </div>
+
+        <div class="project-card">
+          <img src="images/1730016548182.jpg" alt="Logo Concept">
+          <div class="meta"><h3>Logo Concept</h3><p>Logo explorations for several small business clients.</p></div>
+        </div>
+
+        <div class="project-card">
+          <img src="images/Job Fair 2.jpg" alt="Job Fair Campaign">
+          <div class="meta"><h3>Job Fair Campaign</h3><p>Posters, banners and online creatives for career fair.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" style="flex-direction:column; align-items:flex-start;">
+      <h2 class="reveal">Gallery</h2>
+      <div class="gallery-grid reveal">
+        <div class="gallery-grid-item" style="position:relative;">
+          <img src="images/Savify Brochure.jpg" alt="Savify Brochure gallery">
+          <div class="gallery-overlay">Savify Brochure</div>
+        </div>
+        <div class="gallery-grid-item" style="position:relative;">
+          <img src="images/1733347118203.jpg" alt="Branding showcase gallery">
+          <div class="gallery-overlay">Branding Showcase</div>
+        </div>
+        <div class="gallery-grid-item" style="position:relative;">
+          <img src="images/WhatsApp Image 2025-08-21 at 16.10.01.jpeg" alt="Event poster gallery">
+          <div class="gallery-overlay">Event Poster</div>
+        </div>
+        <div class="gallery-grid-item" style="position:relative;">
+          <img src="images/1730016548182.jpg" alt="Logo concept gallery">
+          <div class="gallery-overlay">Logo Concept</div>
+        </div>
+        <div class="gallery-grid-item" style="position:relative;">
+          <img src="images/Job Fair 2.jpg" alt="Job fair gallery">
+          <div class="gallery-overlay">Job Fair Campaign</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" style="display:flex; align-items:center; justify-content:center;">
+      <div class="content-card reveal" style="max-width:700px;">
+        <h2>Contact</h2>
+        <p>Want to collaborate or hire me for your next project?</p>
+        <p>Email: <a href="mailto:codewithfarhanahmed@gmail.com" style="color:#ffd580">codewithfarhanahmed@gmail.com</a></p>
+        <p>GitHub: <a href="https://github.com/codewithfarhanahmed" target="_blank" rel="noopener" style="color:#ffd580">github.com/codewithfarhanahmed</a></p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <section style="min-height:auto; padding:32px 24px;">
+      <footer class="reveal">© 2025 Farhan Ahmed. All rights reserved.</footer>
+    </section>
+  </main>
+
+  <!-- ================= THREE.JS (wireframe globe + network) ================= -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
   <script>
-    const startScreen = document.getElementById("start-screen");
-    const startBtn = document.getElementById("start-btn");
-    const mainSite = document.getElementById("main-site");
-    const music = document.getElementById("bg-music");
+  /* ================= Helper & UI: Start screen, Music, Typing, Carousel, Reveal ================= */
+  const startScreen = document.getElementById('start-screen');
+  const startBtn = document.getElementById('start-btn');
+  const transitionOverlay = document.getElementById('transition-overlay');
+  const mainEl = document.getElementById('main');
+  const music = document.getElementById('bg-music');
+  const musicControl = document.getElementById('music-control');
 
-    function fadeInMusic() {
+  function fadeInMusic(){
+    try{
       music.volume = 0;
-      const fadeStep = 0.02;
-      const fadeInterval = 30;
-      const fade = setInterval(() => {
-        if(music.volume < 1){
-          music.volume = Math.min(music.volume + fadeStep, 1);
-        } else {
-          clearInterval(fade);
-        }
-      }, fadeInterval);
+      const step = 0.02;
+      const timer = setInterval(()=>{
+        music.volume = Math.min(music.volume + step, 1);
+        if(music.volume >= 1) clearInterval(timer);
+      }, 60);
+    } catch(e){}
+  }
+
+  startBtn.addEventListener('click', ()=>{
+    transitionOverlay.classList.add('active');
+    setTimeout(()=>{
+      startScreen.style.display = 'none';
+      mainEl.style.display = 'block';
+      // attempt to play music (user gesture)
+      music.play().then(()=>fadeInMusic()).catch(()=>{});
+      musicControl.textContent = '⏸ Pause Music';
+    }, 1000);
+  });
+
+  musicControl.addEventListener('click', ()=>{
+    if(music.paused){
+      music.play().then(()=>fadeInMusic()).catch(()=>{});
+      musicControl.textContent = '⏸ Pause Music';
+    } else {
+      music.pause();
+      musicControl.textContent = '▶ Play Music';
     }
+  });
 
-    startBtn.addEventListener("click", () => {
-      startScreen.style.display = "none";
-      mainSite.style.display = "block";
-      mainSite.classList.add("fade-in");
-      music.play().then(fadeInMusic).catch(console.log);
-    });
-  </script>
+  // Typing effect
+  const phrases = ["a Graphics Designer.", "a Front-End Developer.", "a Creative Thinker.", "a Visual Storyteller."];
+  const typedText = document.getElementById('typed-text');
+  let pIndex = 0, chIndex = 0, deleting = false;
+  const typeSpeed = 90;
+  function typeLoop(){
+    const full = phrases[pIndex];
+    if(!deleting){
+      chIndex++;
+      typedText.textContent = full.slice(0,chIndex);
+      if(chIndex === full.length){
+        deleting = true;
+        setTimeout(typeLoop, 1200);
+        return;
+      }
+    } else {
+      chIndex--;
+      typedText.textContent = full.slice(0,chIndex);
+      if(chIndex === 0){
+        deleting = false;
+        pIndex = (pIndex + 1) % phrases.length;
+      }
+    }
+    setTimeout(typeLoop, typeSpeed);
+  }
+  document.addEventListener('DOMContentLoaded', ()=>setTimeout(typeLoop, 400));
 
-  <!-- Scroll fade-in effect -->
-  <script>
-    const sections = document.querySelectorAll("section");
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
-      });
-    }, { threshold: 0.2 });
-    sections.forEach(section => observer.observe(section));
-  </script>
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.18 });
+  revealEls.forEach(el => revealObserver.observe(el));
 
-  <!-- Draggable carousel -->
-  <script>
+  // Carousel drag
+  (function initCarouselDrag(){
     const carousel = document.querySelector('.projects-carousel');
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    carousel.addEventListener('mousedown', (e) => {
-      isDown = true;
-      startX = e.pageX - carousel.offsetLeft;
-      scrollLeft = carousel.scrollLeft;
+    if(!carousel) return;
+    let isDown=false, startX, scrollLeft;
+    carousel.addEventListener('mousedown', e => {
+      isDown = true; startX = e.pageX - carousel.offsetLeft; scrollLeft = carousel.scrollLeft;
+      carousel.style.cursor = 'grabbing';
     });
-    carousel.addEventListener('mouseleave', () => { isDown = false; });
-    carousel.addEventListener('mouseup', () => { isDown = false; });
-    carousel.addEventListener('mousemove', (e) => {
+    window.addEventListener('mouseup', ()=>{ isDown=false; carousel.style.cursor = 'grab'; });
+    carousel.addEventListener('mousemove', e => {
       if(!isDown) return;
       e.preventDefault();
       const x = e.pageX - carousel.offsetLeft;
-      const walk = (x - startX) * 2;
+      const walk = (x - startX) * 1.6;
       carousel.scrollLeft = scrollLeft - walk;
     });
-  </script>
 
-  <!-- Typing animation -->
-  <script>
-    const phrases = [
-      "a Graphics Designer.",
-      "a Front-End Developer.",
-      "a Creative Thinker.",
-      "a Visual Storyteller."
-    ];
-    let currentPhrase = 0;
-    let currentChar = 0;
-    let typingSpeed = 100;
-    let deleting = false;
-    const typedText = document.getElementById("typed-text");
+    // touch
+    let tStartX=0, tScrollLeft=0;
+    carousel.addEventListener('touchstart', e => { tStartX = e.touches[0].pageX - carousel.offsetLeft; tScrollLeft = carousel.scrollLeft; }, {passive:true});
+    carousel.addEventListener('touchmove', e => { const x = e.touches[0].pageX - carousel.offsetLeft; const walk = (x - tStartX) * 1.3; carousel.scrollLeft = tScrollLeft - walk; }, {passive:true});
+  })();
 
-    function type() {
-      const fullText = phrases[currentPhrase];
-      if(!deleting){
-        typedText.textContent = fullText.substring(0, currentChar + 1);
-        currentChar++;
-        if(currentChar === fullText.length){
-          deleting = true;
-          setTimeout(type, 1500);
-          return;
-        }
-      } else {
-        typedText.textContent = fullText.substring(0, currentChar - 1);
-        currentChar--;
-        if(currentChar === 0){
-          deleting = false;
-          currentPhrase = (currentPhrase + 1) % phrases.length;
-        }
-      }
-      setTimeout(type, typingSpeed);
-    }
-    document.addEventListener("DOMContentLoaded", () => { type(); });
-  </script>
+  /* ================= THREE.JS: Wireframe Globe + Network ================= */
+  (function globeInit(){
+    const canvas = document.getElementById('bg-canvas');
+    if(!canvas) return;
 
-  <!-- Animated doodle background -->
-  <canvas id="scene"></canvas>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("scene"), alpha: true });
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+    renderer.setPixelRatio(window.devicePixelRatio || 1);
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.outputEncoding = THREE.sRGBEncoding;
 
-    // Glowing white sphere
-    const geometry = new THREE.IcosahedronGeometry(3, 3);
-    const material = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
-      emissive: 0xffffff,
-      emissiveIntensity: 0.5,
-      shininess: 80,
-      wireframe: true
+    // Scene & Camera
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 1000);
+    camera.position.z = 28;
+    camera.position.y = 0;
+
+    // Lighting (very subtle; lighting mostly simulated by material/emissive)
+    scene.add(new THREE.AmbientLight(0xffffff, 0.25));
+    const pl = new THREE.PointLight(0xffffff, 0.3);
+    pl.position.set(50, 20, 50);
+    scene.add(pl);
+
+    /* ---------- Wireframe globe (edge-style) ---------- */
+    const globeRadius = 7.2;
+    const widthSeg = 64;
+    const heightSeg = 48;
+    const sphereGeo = new THREE.SphereGeometry(globeRadius, widthSeg, heightSeg);
+
+    // Create edges geometry for a crisp wireframe look
+    const edgesGeo = new THREE.EdgesGeometry(sphereGeo, 1);
+    // Use LineSegments with a glowing-like material
+    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x87f0ff, linewidth: 1, transparent: true, opacity: 0.95 });
+    const wireframe = new THREE.LineSegments(edgesGeo, lineMaterial);
+    wireframe.renderOrder = 2;
+    scene.add(wireframe);
+
+    // Add a second slightly-offset wireframe with different color/opacity for depth
+    const edgesGeo2 = new THREE.EdgesGeometry(new THREE.SphereGeometry(globeRadius * 1.001, widthSeg, heightSeg));
+    const lineMaterial2 = new THREE.LineBasicMaterial({ color: 0x88ffb8, linewidth: 1, transparent: true, opacity: 0.18 });
+    const wireframe2 = new THREE.LineSegments(edgesGeo2, lineMaterial2);
+    scene.add(wireframe2);
+
+    /* ---------- Network points on the globe surface ---------- */
+    const networkCount = 240; // number of nodes on sphere surface
+    const nodePositions = [];
+    const nodes = new Float32Array(networkCount * 3);
+    const nodeColors = new Float32Array(networkCount * 3);
+
+    // Utility to convert spherical coords to cartesian
+    function sphericalToCartesian(r, theta, phi){
+      // theta: azimuthal angle 0..2PI, phi: polar -PI/2..PI/2
+      const x = r * Math.cos(phi) * Math.cos(theta);
+      const y = r * Math.sin(phi);
+      const z = r * Math.cos(phi) * Math.sin(theta);
+      return [x,y,z];
+    }
+
+    // Generate node positions (roughly uniformly distributed)
+    for(let i=0;i<networkCount;i++){
+      // use golden-section spiral for near-uniform distribution
+      const t = i / networkCount;
+      const phi = Math.acos(1 - 2 * t) - Math.PI/2; // polar
+      const theta = Math.PI * (1 + Math.sqrt(5)) * i; // azimuth
+      const jitter = (Math.random() - 0.5) * 0.12; // small jitter
+      const r = globeRadius + 0.02 + jitter;
+      const [x,y,z] = sphericalToCartesian(r, theta, phi);
+      nodePositions.push(new THREE.Vector3(x,y,z));
+
+      nodes[i*3] = x;
+      nodes[i*3+1] = y;
+      nodes[i*3+2] = z;
+
+      // color nodes warm-ish
+      nodeColors[i*3] = 0.82;
+      nodeColors[i*3+1] = 0.95;
+      nodeColors[i*3+2] = 1.0;
+    }
+
+    // Create points material (glowing dot using sprite-like disc via PointsMaterial)
+    const nodeMat = new THREE.PointsMaterial({
+      size: 0.12 * (window.devicePixelRatio || 1),
+      vertexColors: false,
+      color: 0x8ff2ff,
+      transparent: true,
+      opacity: 0.95,
+      depthWrite: false
     });
-    const sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere);
+    const nodesGeo = new THREE.BufferGeometry();
+    nodesGeo.setAttribute('position', new THREE.BufferAttribute(nodes, 3));
+    nodesGeo.setAttribute('color', new THREE.BufferAttribute(nodeColors, 3));
+    const nodePoints = new THREE.Points(nodesGeo, nodeMat);
+    nodePoints.renderOrder = 3;
+    scene.add(nodePoints);
 
-    const pointLight = new THREE.PointLight(0xffffff, 1.2, 100);
-    pointLight.position.set(5, 5, 5);
-    scene.add(pointLight);
-    scene.add(new THREE.AmbientLight(0x222222));
+    /* ---------- Network lines: connect nearby nodes (k-nearest style) ---------- */
+    // We'll connect each node to up to 'linksPerNode' closest nodes within threshold distance
+    const linksPerNode = 3;
+    const maxLinkDistance = 3.6; // tweak - how far lines can reach
+    const linePositions = [];
+    const lineColors = [];
 
-    camera.position.z = 1;
+    for(let i=0;i<networkCount;i++){
+      // compute distances to other nodes
+      const dists = [];
+      for(let j=0;j<networkCount;j++){
+        if(i===j) continue;
+        const d = nodePositions[i].distanceTo(nodePositions[j]);
+        dists.push({ idx:j, d });
+      }
+      // sort by distance
+      dists.sort((a,b)=>a.d - b.d);
+      // choose up to linksPerNode neighbors
+      for(let k=0;k<linksPerNode;k++){
+        const neighbor = dists[k];
+        if(!neighbor) continue;
+        if(neighbor.d > maxLinkDistance) continue;
 
-    function animate() {
+        const p1 = nodePositions[i];
+        const p2 = nodePositions[neighbor.idx];
+
+        // add line segment between p1 - p2 (two points)
+        linePositions.push(p1.x, p1.y, p1.z);
+        linePositions.push(p2.x, p2.y, p2.z);
+
+        // color (slightly bluish, low alpha)
+        lineColors.push(0.5, 0.9, 1.0);
+        lineColors.push(0.5, 0.9, 1.0);
+      }
+    }
+
+    const linkGeom = new THREE.BufferGeometry();
+    const lp = new Float32Array(linePositions);
+    const lc = new Float32Array(lineColors);
+    linkGeom.setAttribute('position', new THREE.BufferAttribute(lp, 3));
+    linkGeom.setAttribute('color', new THREE.BufferAttribute(lc, 3));
+    const linkMat = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.18,
+      linewidth: 1
+    });
+    const linkLines = new THREE.LineSegments(linkGeom, linkMat);
+    linkLines.renderOrder = 1;
+    scene.add(linkLines);
+
+    /* ---------- Atmospheric glow: subtle sprite + halo ---------- */
+    // create faint halo using shader or sprite (simple sprite here)
+    const spriteMap = new THREE.TextureLoader().load("https://cdn.jsdelivr.net/gh/mrdoob/three.js@r152/examples/textures/sprites/disc.png");
+    const haloMat = new THREE.SpriteMaterial({ map: spriteMap, color: 0x7feeff, opacity: 0.06, blending: THREE.AdditiveBlending });
+    const halo = new THREE.Sprite(haloMat);
+    halo.scale.set(globeRadius * 5.0, globeRadius * 5.0, 1.0);
+    scene.add(halo);
+
+    /* ---------- Interaction & animation ---------- */
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', (e)=>{
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+    });
+
+    // scroll-based parallax
+    let targetScroll = 0, scrollPos = 0;
+    window.addEventListener('scroll', ()=> {
+      targetScroll = window.scrollY / (document.body.scrollHeight - window.innerHeight || 1);
+    }, {passive:true});
+
+    // animate
+    let baseRotation = 0;
+    function animate(){
       requestAnimationFrame(animate);
-      sphere.rotation.x += 0.003;
-      sphere.rotation.y += 0.004;
+
+      // smooth scroll interpolation
+      scrollPos += (targetScroll - scrollPos) * 0.06;
+
+      // base rotation speed (slows on top, slightly faster when scrolled down)
+      const speed = 0.0010 + scrollPos * 0.0030;
+      baseRotation += speed;
+
+      // wireframes rotate
+      wireframe.rotation.y = baseRotation * 0.7;
+      wireframe.rotation.x = Math.sin(baseRotation * 0.12) * 0.02;
+      wireframe.rotation.z = Math.cos(baseRotation * 0.07) * 0.03;
+
+      wireframe2.rotation.y = baseRotation * 0.71;
+      wireframe2.rotation.x = wireframe.rotation.x * 0.98;
+      wireframe2.rotation.z = wireframe.rotation.z * 1.02;
+
+      // nodes and links rotate slightly differently for depth
+      nodePoints.rotation.y = baseRotation * 0.74;
+      nodePoints.rotation.x = Math.sin(baseRotation * 0.08) * 0.01;
+
+      linkLines.rotation.y = baseRotation * 0.73;
+      linkLines.rotation.x = Math.sin(baseRotation * 0.06) * 0.012;
+
+      // subtle parallax camera move with mouse
+      camera.position.x += (mouseX * 6 - camera.position.x) * 0.04;
+      camera.position.y += (-mouseY * 4 - camera.position.y) * 0.03;
+
+      // zoom slightly on scroll
+      camera.position.z = 28 - scrollPos * 8;
+
+      // nodes subtle pulse
+      const t = performance.now() * 0.002;
+      nodeMat.size = 0.10 + Math.sin(t) * 0.02 * (window.devicePixelRatio || 1);
+
       renderer.render(scene, camera);
     }
     animate();
 
-    window.addEventListener("resize", () => {
+    // responsive
+    window.addEventListener('resize', ()=>{
+      renderer.setSize(window.innerWidth, window.innerHeight);
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
     });
+
+  })(); // globeInit end
   </script>
 </body>
 </html>

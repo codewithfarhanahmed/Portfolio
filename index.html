@@ -15,12 +15,23 @@
     body{
       font-family:'Poppins',sans-serif;
       color:#111;
-      background:#000; /* fallback while canvas loads */
+      background: linear-gradient(180deg, #0b0011 0%, #0b001f 100%); /* deep base */
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       overflow-y:auto;
       scroll-behavior:smooth;
       line-height:1.4;
+    }
+
+    /* ================= THEME COLORS (pink/purple gradient) ================= */
+    /* primary gradient: from magenta to purple */
+    :root{
+      --accent-start: #ff5aa3; /* pink */
+      --accent-end: #8a4dff;   /* purple */
+      --accent-mid: #ff73c9;
+      --muted: rgba(255,255,255,0.08);
+      --text-strong: #ffffff;
+      --card-bg: rgba(255,255,255,0.03);
     }
 
     /* ================= CANVAS BACKGROUND ================= */
@@ -32,7 +43,7 @@
       z-index: -2; /* always behind content */
       display: block;
       pointer-events: none;
-      background: radial-gradient(ellipse at center, rgba(10,10,20,0.20), rgba(0,0,0,0.45));
+      background: radial-gradient(ellipse at center, rgba(20,8,28,0.40), rgba(4,2,8,0.8));
     }
     /* subtle vignette for depth */
     .bg-vignette {
@@ -48,15 +59,19 @@
     #start-screen{
       position:fixed; inset:0;
       display:flex; gap:18px; align-items:center; justify-content:center;
-      flex-direction:column; background:#ffffff; z-index:10020;
+      flex-direction:column; background: linear-gradient(180deg, #fff, #fff); z-index:10020;
     }
     #start-screen .title{
       font-size:26px; font-weight:700; color:#111; letter-spacing:0.2px;
     }
     #start-btn{
-      background:#000; color:#fff; border:none; padding:14px 30px; border-radius:12px; font-size:18px;
-      cursor:pointer; box-shadow:0 12px 30px rgba(0,0,0,0.12);
+      background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+      color:#fff; border:none; padding:14px 30px; border-radius:12px; font-size:18px;
+      cursor:pointer; box-shadow:0 18px 48px rgba(138,77,255,0.18);
+      transition: transform .18s ease, box-shadow .18s ease;
     }
+    #start-btn:hover { transform: translateY(-4px); box-shadow:0 26px 64px rgba(138,77,255,0.22); }
+
     #transition-overlay{
       position:fixed; inset:0; z-index:10019; pointer-events:none;
       background: radial-gradient(circle at center, #fff 0%, #fff 70%);
@@ -88,48 +103,60 @@
     nav{
       position:fixed; top:18px; left:20px; right:20px;
       display:flex; justify-content:space-between; align-items:center;
-      padding:10px 18px; background: rgba(255,255,255,0.04);
+      padding:10px 18px; background: rgba(255,255,255,0.03);
       border-radius:12px; z-index:10010; backdrop-filter: blur(6px);
-      box-shadow:0 6px 18px rgba(0,0,0,0.3);
+      box-shadow:0 10px 28px rgba(0,0,0,0.35);
     }
-    .logo{ font-weight:700; color:#fff; letter-spacing:0.4px; font-size:18px }
+    .logo{ font-weight:700; color:var(--text-strong); letter-spacing:0.4px; font-size:18px }
     nav ul{ list-style:none; display:flex; gap:14px; align-items:center; margin-left:8px }
     nav a{
       color: rgba(255,255,255,0.92); text-decoration:none; font-weight:500;
       padding:6px 8px; border-radius:8px;
       transition: all .18s ease;
     }
-    nav a:hover{ background: rgba(255,255,255,0.06); color:#80ccff }
+    nav a:hover{ background: rgba(255,255,255,0.04); color: var(--accent-start); transform: translateY(-1px); }
 
     /* ================= HERO ================= */
-    .hero-wrap { text-align:center; color:#fff; padding-top:40px; max-width:1100px; }
+    .hero-wrap { text-align:center; color:var(--text-strong); padding-top:40px; max-width:1100px; }
     .hero-inner { width:100%; }
     .hero-wrap h1 {
       font-size: clamp(28px, 6vw, 64px);
       font-weight:700; line-height:1.02; margin-bottom:12px;
-      text-shadow: 0 6px 26px rgba(0,0,0,0.6);
+      text-shadow: 0 8px 36px rgba(0,0,0,0.7);
+      background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
     .hero-wrap p {
-      font-size: clamp(15px, 2vw, 20px); color:#e8eaf6; margin-bottom:20px;
+      font-size: clamp(15px, 2vw, 20px); color: rgba(255,255,255,0.9); margin-bottom:20px;
     }
-    #typed-text { color:#80ccff; font-weight:600 }
+    #typed-text {
+      color: var(--accent-mid); font-weight:600;
+      background: linear-gradient(90deg, #ff9ad8, #c285ff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
 
     .cta-row { margin-top:20px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
 
     .btn {
-      background:#80ccff; color:#111; border:none; padding:10px 18px; border-radius:10px; font-weight:700; cursor:pointer;
-      box-shadow:0 10px 26px rgba(255,213,120,0.08);
+      background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+      color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:700; cursor:pointer;
+      box-shadow:0 14px 36px rgba(138,77,255,0.12);
+      transition: transform .18s ease, box-shadow .18s ease;
     }
-    .btn.ghost { background:rgba(255,255,255,0.06); color:#fff; }
+    .btn:hover { transform: translateY(-4px); box-shadow:0 20px 56px rgba(138,77,255,0.16); }
+    .btn.ghost { background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02)); color:#fff; border:1px solid rgba(255,255,255,0.04) }
 
     /* ================= ABOUT ================= */
     .content-card {
-      background: rgba(255,255,255,0.03);
+      background: var(--card-bg);
       padding: 26px;
       max-width: 960px;
       border-radius: 14px;
       color: #f5f5f7;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+      box-shadow: 0 14px 46px rgba(2,0,8,0.6);
+      border: 1px solid rgba(255,255,255,0.02);
     }
     .content-card h2 { color: #fff; margin-bottom:10px; font-size:28px; }
     .content-card p { color:#e6e6ea; line-height:1.7 }
@@ -143,17 +170,18 @@
     .projects-carousel::-webkit-scrollbar{display:none}
     .project-card{
       min-width:300px; max-width:360px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       border-radius:14px; overflow:hidden; color:#fff;
-      box-shadow:0 14px 40px rgba(3,6,23,0.6);
+      box-shadow:0 18px 44px rgba(3,6,23,0.6);
       transition: transform .32s ease, box-shadow .32s ease;
       flex-shrink:0;
+      border: 1px solid rgba(138,77,255,0.06);
     }
     .project-card img{ width:100%; height:200px; object-fit:cover; display:block }
     .project-card .meta{ padding:12px 14px }
     .project-card h3{ font-size:18px; margin-bottom:6px }
     .project-card p{ color:#dcdce2; font-size:14px }
-    .project-card:hover{ transform:translateY(-8px); box-shadow:0 22px 66px rgba(0,0,0,0.6) }
+    .project-card:hover{ transform:translateY(-8px); box-shadow:0 26px 86px rgba(138,77,255,0.16) }
 
     /* ================= GALLERY ================= */
     #gallery h2 { color:#fff; margin-bottom:14px; font-size:26px; text-align:center }
@@ -166,12 +194,14 @@
     .gallery-overlay{ position:absolute; left:0; right:0; bottom:0; padding:10px 12px; color:#fff; background:linear-gradient(to top, rgba(0,0,0,0.55), transparent); font-weight:700 }
 
     /* ================= CONTACT/FOOTER ================= */
-    footer{ color:#cfcfd6; padding:18px; text-align:center }
+    footer{ color:#d8d0df; padding:18px; text-align:center }
 
     /* ================= MUSIC CONTROL ================= */
     .music-control{
       position:fixed; bottom:22px; right:22px; z-index:10008;
-      background:rgba(255,255,255,0.06); color:#fff; padding:8px 12px; border-radius:20px; cursor:pointer; font-weight:600; backdrop-filter:blur(6px);
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      color:#fff; padding:8px 12px; border-radius:20px; cursor:pointer; font-weight:600; backdrop-filter:blur(6px);
+      border: 1px solid rgba(255,255,255,0.03);
     }
 
     /* ================= REVEAL ANIMATIONS ================= */
@@ -234,7 +264,7 @@
     <!-- HERO -->
     <section id="hero" class="hero-wrap">
       <div class="hero-inner">
-        <h1 class="reveal">Hi, I'm <span style="color:#80ccff">Farhan Ahmed</span></h1>
+        <h1 class="reveal">Hi, I'm <span style="background:linear-gradient(90deg,var(--accent-start),var(--accent-end)); -webkit-background-clip:text; background-clip:text; color:transparent;">Farhan Ahmed</span></h1>
         <p class="reveal">I am <span id="typed-text"></span></p>
         <div class="cta-row reveal">
           <a class="btn" href="#projects">See Projects</a>
@@ -317,8 +347,8 @@
       <div class="content-card reveal" style="max-width:700px;">
         <h2>Contact</h2>
         <p>Want to collaborate or hire me for your next project?</p>
-        <p>Email: <a href="mailto:codewithfarhanahmed@gmail.com" style="color:#ffd580">codewithfarhanahmed@gmail.com</a></p>
-        <p>GitHub: <a href="https://github.com/codewithfarhanahmed" target="_blank" rel="noopener" style="color:#ffd580">github.com/codewithfarhanahmed</a></p>
+        <p>Email: <a href="mailto:codewithfarhanahmed@gmail.com" style="color:#ff9ad8">codewithfarhanahmed@gmail.com</a></p>
+        <p>GitHub: <a href="https://github.com/codewithfarhanahmed" target="_blank" rel="noopener" style="color:#ff9ad8">github.com/codewithfarhanahmed</a></p>
       </div>
     </section>
 
@@ -328,7 +358,7 @@
     </section>
   </main>
 
-  <!-- ================= THREE.JS (wireframe globe + network) ================= -->
+  <!-- ================= THREE.JS (wireframe globe + network, pink/purple theme) ================= -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
   <script>
   /* ================= Helper & UI: Start screen, Music, Typing, Carousel, Reveal ================= */
@@ -358,7 +388,7 @@
       // attempt to play music (user gesture)
       music.play().then(()=>fadeInMusic()).catch(()=>{});
       musicControl.textContent = '⏸ Pause Music';
-    }, 1000);
+    }, 900);
   });
 
   musicControl.addEventListener('click', ()=>{
@@ -429,7 +459,7 @@
     carousel.addEventListener('touchmove', e => { const x = e.touches[0].pageX - carousel.offsetLeft; const walk = (x - tStartX) * 1.3; carousel.scrollLeft = tScrollLeft - walk; }, {passive:true});
   })();
 
-  /* ================= THREE.JS: Wireframe Globe + Network ================= */
+  /* ================= THREE.JS: Wireframe Globe + Network (pink/purple theme) ================= */
   (function globeInit(){
     const canvas = document.getElementById('bg-canvas');
     if(!canvas) return;
@@ -447,8 +477,8 @@
     camera.position.y = 0;
 
     // Lighting (very subtle; lighting mostly simulated by material/emissive)
-    scene.add(new THREE.AmbientLight(0xffffff, 0.25));
-    const pl = new THREE.PointLight(0xffffff, 0.3);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.18));
+    const pl = new THREE.PointLight(0xffffff, 0.28);
     pl.position.set(50, 20, 50);
     scene.add(pl);
 
@@ -460,27 +490,26 @@
 
     // Create edges geometry for a crisp wireframe look
     const edgesGeo = new THREE.EdgesGeometry(sphereGeo, 1);
-    // Use LineSegments with a glowing-like material
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x87f0ff, linewidth: 1, transparent: true, opacity: 0.95 });
+    // Use LineSegments with a glowing-like material (pink/purple)
+    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xff73c9, linewidth: 1, transparent: true, opacity: 0.96 });
     const wireframe = new THREE.LineSegments(edgesGeo, lineMaterial);
     wireframe.renderOrder = 2;
     scene.add(wireframe);
 
     // Add a second slightly-offset wireframe with different color/opacity for depth
     const edgesGeo2 = new THREE.EdgesGeometry(new THREE.SphereGeometry(globeRadius * 1.001, widthSeg, heightSeg));
-    const lineMaterial2 = new THREE.LineBasicMaterial({ color: 0x88ffb8, linewidth: 1, transparent: true, opacity: 0.18 });
+    const lineMaterial2 = new THREE.LineBasicMaterial({ color: 0xb78aff, linewidth: 1, transparent: true, opacity: 0.18 });
     const wireframe2 = new THREE.LineSegments(edgesGeo2, lineMaterial2);
     scene.add(wireframe2);
 
     /* ---------- Network points on the globe surface ---------- */
-    const networkCount = 240; // number of nodes on sphere surface
+    const networkCount = 260; // number of nodes on sphere surface
     const nodePositions = [];
     const nodes = new Float32Array(networkCount * 3);
     const nodeColors = new Float32Array(networkCount * 3);
 
     // Utility to convert spherical coords to cartesian
     function sphericalToCartesian(r, theta, phi){
-      // theta: azimuthal angle 0..2PI, phi: polar -PI/2..PI/2
       const x = r * Math.cos(phi) * Math.cos(theta);
       const y = r * Math.sin(phi);
       const z = r * Math.cos(phi) * Math.sin(theta);
@@ -489,7 +518,6 @@
 
     // Generate node positions (roughly uniformly distributed)
     for(let i=0;i<networkCount;i++){
-      // use golden-section spiral for near-uniform distribution
       const t = i / networkCount;
       const phi = Math.acos(1 - 2 * t) - Math.PI/2; // polar
       const theta = Math.PI * (1 + Math.sqrt(5)) * i; // azimuth
@@ -502,20 +530,24 @@
       nodes[i*3+1] = y;
       nodes[i*3+2] = z;
 
-      // color nodes warm-ish
-      nodeColors[i*3] = 0.82;
-      nodeColors[i*3+1] = 0.95;
-      nodeColors[i*3+2] = 1.0;
+      // color nodes in pink/purple palette
+      const rr = 1.0;
+      const gg = 0.6 + Math.random() * 0.25;
+      const bb = 0.9 + Math.random() * 0.12;
+      nodeColors[i*3] = rr;
+      nodeColors[i*3+1] = gg;
+      nodeColors[i*3+2] = bb;
     }
 
-    // Create points material (glowing dot using sprite-like disc via PointsMaterial)
+    // Create points material (glowing dot using PointsMaterial)
     const nodeMat = new THREE.PointsMaterial({
       size: 0.12 * (window.devicePixelRatio || 1),
       vertexColors: false,
-      color: 0x8ff2ff,
+      color: 0xff9ad8,
       transparent: true,
-      opacity: 0.95,
-      depthWrite: false
+      opacity: 0.98,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
     });
     const nodesGeo = new THREE.BufferGeometry();
     nodesGeo.setAttribute('position', new THREE.BufferAttribute(nodes, 3));
@@ -525,23 +557,19 @@
     scene.add(nodePoints);
 
     /* ---------- Network lines: connect nearby nodes (k-nearest style) ---------- */
-    // We'll connect each node to up to 'linksPerNode' closest nodes within threshold distance
     const linksPerNode = 3;
     const maxLinkDistance = 3.6; // tweak - how far lines can reach
     const linePositions = [];
     const lineColors = [];
 
     for(let i=0;i<networkCount;i++){
-      // compute distances to other nodes
       const dists = [];
       for(let j=0;j<networkCount;j++){
         if(i===j) continue;
         const d = nodePositions[i].distanceTo(nodePositions[j]);
         dists.push({ idx:j, d });
       }
-      // sort by distance
       dists.sort((a,b)=>a.d - b.d);
-      // choose up to linksPerNode neighbors
       for(let k=0;k<linksPerNode;k++){
         const neighbor = dists[k];
         if(!neighbor) continue;
@@ -550,13 +578,12 @@
         const p1 = nodePositions[i];
         const p2 = nodePositions[neighbor.idx];
 
-        // add line segment between p1 - p2 (two points)
         linePositions.push(p1.x, p1.y, p1.z);
         linePositions.push(p2.x, p2.y, p2.z);
 
-        // color (slightly bluish, low alpha)
-        lineColors.push(0.5, 0.9, 1.0);
-        lineColors.push(0.5, 0.9, 1.0);
+        // color (pinkish-blue gradient values)
+        lineColors.push(0.9, 0.6, 1.0);
+        lineColors.push(0.9, 0.6, 1.0);
       }
     }
 
@@ -568,17 +595,17 @@
     const linkMat = new THREE.LineBasicMaterial({
       vertexColors: true,
       transparent: true,
-      opacity: 0.18,
-      linewidth: 1
+      opacity: 0.16,
+      linewidth: 1,
+      blending: THREE.AdditiveBlending
     });
     const linkLines = new THREE.LineSegments(linkGeom, linkMat);
     linkLines.renderOrder = 1;
     scene.add(linkLines);
 
     /* ---------- Atmospheric glow: subtle sprite + halo ---------- */
-    // create faint halo using shader or sprite (simple sprite here)
     const spriteMap = new THREE.TextureLoader().load("https://cdn.jsdelivr.net/gh/mrdoob/three.js@r152/examples/textures/sprites/disc.png");
-    const haloMat = new THREE.SpriteMaterial({ map: spriteMap, color: 0x7feeff, opacity: 0.06, blending: THREE.AdditiveBlending });
+    const haloMat = new THREE.SpriteMaterial({ map: spriteMap, color: 0xff8acc, opacity: 0.06, blending: THREE.AdditiveBlending });
     const halo = new THREE.Sprite(haloMat);
     halo.scale.set(globeRadius * 5.0, globeRadius * 5.0, 1.0);
     scene.add(halo);
@@ -605,23 +632,23 @@
       scrollPos += (targetScroll - scrollPos) * 0.06;
 
       // base rotation speed (slows on top, slightly faster when scrolled down)
-      const speed = 0.0010 + scrollPos * 0.0030;
+      const speed = 0.0009 + scrollPos * 0.0035;
       baseRotation += speed;
 
       // wireframes rotate
-      wireframe.rotation.y = baseRotation * 0.7;
+      wireframe.rotation.y = baseRotation * 0.75;
       wireframe.rotation.x = Math.sin(baseRotation * 0.12) * 0.02;
       wireframe.rotation.z = Math.cos(baseRotation * 0.07) * 0.03;
 
-      wireframe2.rotation.y = baseRotation * 0.71;
+      wireframe2.rotation.y = baseRotation * 0.76;
       wireframe2.rotation.x = wireframe.rotation.x * 0.98;
       wireframe2.rotation.z = wireframe.rotation.z * 1.02;
 
       // nodes and links rotate slightly differently for depth
-      nodePoints.rotation.y = baseRotation * 0.74;
+      nodePoints.rotation.y = baseRotation * 0.78;
       nodePoints.rotation.x = Math.sin(baseRotation * 0.08) * 0.01;
 
-      linkLines.rotation.y = baseRotation * 0.73;
+      linkLines.rotation.y = baseRotation * 0.77;
       linkLines.rotation.x = Math.sin(baseRotation * 0.06) * 0.012;
 
       // subtle parallax camera move with mouse

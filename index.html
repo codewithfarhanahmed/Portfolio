@@ -230,7 +230,7 @@
 
   <!-- ================= START SCREEN ================= -->
   <div id="start-screen" role="dialog" aria-modal="true">
-    <div class="title">Welcome — Farhan Ahmed</div>
+    <div class="title">Welcome!</div>
     <button id="start-btn">View Portfolio</button>
     <div id="transition-overlay" aria-hidden="true"></div>
   </div>
@@ -264,7 +264,20 @@
     <!-- HERO -->
     <section id="hero" class="hero-wrap">
       <div class="hero-inner">
-        <h1 class="reveal">Hi, I'm <span style="background:linear-gradient(90deg,var(--accent-start),var(--accent-end)); -webkit-background-clip:text; background-clip:text; color:transparent;">Farhan Ahmed</span></h1>
+       <h1 class="reveal">
+  Hi, I'm <span class="glow">Farhan Ahmed</span>
+</h1>
+
+<style>
+  .glow {
+    color: white;
+    text-shadow: 
+      0 0 5px rgba(255, 255, 255, 0.6),
+      0 0 10px rgba(255, 255, 255, 0.4),
+      0 0 15px rgba(255, 255, 255, 0.2);
+  }
+</style>
+
         <p class="reveal">I am <span id="typed-text"></span></p>
         <div class="cta-row reveal">
           <a class="btn" href="#projects">See Projects</a>

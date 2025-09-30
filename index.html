@@ -309,7 +309,7 @@
     </div>
     <div style="display:flex; gap:10px; align-items:center;">
       <a class="btn ghost" href="#projects">View Work</a>
-      <a class="btn" href="mailto:farhan.riphah21@gmail.com">Hire Me</a>
+      <a class="btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=farhan.riphah21@gmail.com">Hire Me</a>
     </div>
   </nav>
 
@@ -445,13 +445,13 @@
     <!-- CONTACT -->
     <div class="social-links">
   <a href="https://www.linkedin.com/in/yourprofile" target="_blank">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn">
+    <img src="https://img.icons8.com/?size=100&id=8808&format=png&color=FFFFFF" alt="LinkedIn">
   </a>
   <a href="https://github.com/codewithfarhanahmed" target="_blank">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+    <img src="https://img.icons8.com/?size=100&id=12599&format=png&color=FFFFFF" alt="GitHub">
   </a>
-  <a href="mailto:youremail@example.com">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Email">
+  <a href="mailto:farhan.riphah21@gmail.com">
+    <img src="https://img.icons8.com/?size=100&id=ZE7CF2CQ0DcJ&format=png&color=FFFFFF" alt="Email">
   </a>
    <a class="btn ghost" href="resume/Farhan Ahmed Resume - FE .pdf" download="Farhan_Ahmed_Resume.pdf">
   📄 Download Resume
@@ -461,6 +461,23 @@
 
 
     <!-- FOOTER -->
+
+      <!-- Visitor Counter -->
+<div id="visitor-counter" style="color:white; font-size:14px; margin-top:10px;">
+  Unique Visitors: <span id="visitor-count">Loading...</span>
+</div>
+
+<script>
+  // Using CountAPI (free, no signup)
+  const counterKey = "farhan-portfolio-unique-visitors";
+
+  // Increment + Get unique visitors
+  fetch(`https://api.countapi.xyz/hit/${counterKey}/visitors`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("visitor-count").innerText = data.value;
+    });
+</script>
     <section style="min-height:auto; padding:32px 24px;">
       <footer class="reveal">Created and Updated by Farhan Ahmed - 11/09/2025</footer>
     </section>
@@ -785,5 +802,8 @@
 
   })(); // globeInit end
   </script>
+
+
+
 </body>
 </html>
